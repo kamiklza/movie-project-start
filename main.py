@@ -95,7 +95,6 @@ def add():
 def delete():
     movie_id = request.args.get('movie_id')
     movie_to_delete = Movie.query.get(movie_id)
-    movie_to_add = Movie.Query
     db.session.delete(movie_to_delete)
     db.session.commit()
     return redirect(url_for('home'))
