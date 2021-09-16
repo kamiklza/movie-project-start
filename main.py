@@ -80,14 +80,12 @@ def update(movie_id):
 def add():
     add_form = AddForm()
     if request.method == "POST":
-        print(add_form.title.data)
         params = {
             "api_key": api_key,
             "query": add_form.title.data
         }
 
         response = requests.get(url=moviedb_endpoint, params=params)
-        print(response.json())
         return render_template('select.html', movies=response.json()["results"])
     return render_template('add.html', form=add_form)
 
