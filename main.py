@@ -58,7 +58,7 @@ class AddForm(FlaskForm):
 
 @app.route("/")
 def home():
-    all_movies = db.session.query(Movie).all()
+    all_movies = db.session.query(Movie).order_by(Movie.rating.asc()).all()
     return render_template("index.html", movies=all_movies)
 
 
@@ -95,6 +95,7 @@ def add():
 def delete():
     movie_id = request.args.get('movie_id')
     movie_to_delete = Movie.query.get(movie_id)
+    movie_to_add = Movie.Query
     db.session.delete(movie_to_delete)
     db.session.commit()
     return redirect(url_for('home'))
@@ -112,8 +113,7 @@ def add_card():
     movie_to_add = Movie(title=movie['original_title'], img_url=f"https://image.tmdb.org/t/p/w500{movie['poster_path']}", year=movie['release_date'], description=movie['overview'], rating="None", ranking="None", review="None")
     db.session.add(movie_to_add)
     db.session.commit()
-    return redirect(url_for('home'))
-
+    return redirect(url_for('update', movie_id=movie_to_add.id))
 
 
 
